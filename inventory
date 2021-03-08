@@ -1,0 +1,2 @@
+[elastic_master]
+ec2-3-7-69-63.ap-south-1.compute.amazonaws.com data="/elkdata01" node_name="elk01" is_master=true is_data=true jvmsize=256m ansible_user=ubuntu ansible_private_key_file=/Users/kritiksachdeva/Downloads/aws_key.pem

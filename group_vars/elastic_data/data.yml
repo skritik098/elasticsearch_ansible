@@ -1,0 +1,16 @@
+
+es_heap_size: "8g"
+es_data_dirs:
+  - "/var/lib/elasticsearch"
+es_config:
+  cluster.name: "esprd"
+  network.host: 0
+  cluster.initial_master_nodes: "esmaster1,esmaster2,esmaster3"
+  discovery.seed_hosts: "esmaster1:9300,esmaster2:9300,esmaster3:9300"
+  http.port: 9200
+  node.data: true
+  node.master: true
+  node.ingest: false
+  node.ml: false
+  cluster.remote.connect: false
+  bootstrap.memory_lock: true
