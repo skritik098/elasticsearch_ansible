@@ -1,16 +1,15 @@
 
-es_heap_size: "8g"
+es_heap_size: "{{ jvmsize }}"
+es_log_dir: "/var/log/elasticsearch"
 es_data_dirs:
-  - "/var/lib/elasticsearch"
+  - "{{ data }}"
 es_config:
   cluster.name: "esprd"
-  network.host: 0
-  cluster.initial_master_nodes: "esmaster1,esmaster2,esmaster3"
-  discovery.seed_hosts: "esmaster1:9300,esmaster2:9300,esmaster3:9300"
+  network.host: 0.0.0.0
+  cluster.initial_master_nodes: "{{ groups['elastic_master'] | join(',') }}"
+  discovery.seed_hosts: "{{ groups['elastic_master']:9300 | join(',') }}" # If it gives any error then we have to add the data node as well.
   http.port: 9200
   node.data: true
-  node.master: true
-  node.ingest: false
-  node.ml: false
-  cluster.remote.connect: false
-  bootstrap.memory_lock: true
+  node.master: false
+  node.name: "{{ node_name }}"
+  bootstrap.memory_lock: false

@@ -6,26 +6,13 @@ es_data_dirs:
   - "{{ data }}"
 es_config:
   cluster.name: "esprd"
-  network.host: 0
-  cluster.initial_master_nodes: "emaster01,emaster02"
-  discovery.seed_hosts: "emaster01:9300,emaster02:9300"
+  network.host: 0.0.0.0
+  cluster.initial_master_nodes: "{{ groups['elastic_master'] | join(',') }}"
+  discovery.seed_hosts: "{{ groups['elastic_master']:9300 | join(',') }}"
   http.port: 9200
-  node.data: true
-  node.master: true
-  node.ingest: false
-  node.ml: false
-  cluster.remote.connect: false
-  bootstrap.memory_lock: true
+  node.data: "{{ is_master }}"
+  node.name: "{{ node_name }}"
+  node.master: "{{ is_data }}"
+  bootstrap.memory_lock: false
 
-
-  # - es_version: 7.11.1
-  #   cluster_name: "cluster0"
-  #   node_name: "elk-master"
-  #   node.master: true
-  #   node.data: true
-  #   path.data: "/data/elasticsearch/data"
-  #   path.logs: "/data/elasticsearch/logs"
-  #   network.host: 0.0.0.0
-  #   http.port: 9200
-  #   discovery.zen.minimum_master_nodes: 2
       
