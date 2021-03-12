@@ -1,2 +1,9 @@
 [elastic_master]
-infra101.tap.net data="/elkdata01" node_name="elk01" is_master=true is_data=true jvmsize=256m ansible_user=ubuntu ansible_private_key_file=/Users/kritiksachdeva/Downloads/aws_key.pem
+192.168.1.64 data="/elkdata01" node_name="elk01" is_master=true is_data=true jvmsize=256m ansible_user=root ansible_password=redhat
+192.168.1.65 data="/elkdata01" node_name="elk02" is_master=true is_data=true jvmsize=256m ansible_user=root ansible_password=redhat
+
+[elastic_data]
+
+[elastic_nodes:children]
+elastic_master
+elastic_data

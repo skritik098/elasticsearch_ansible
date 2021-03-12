@@ -1,7 +1,36 @@
 ---
 - hosts: elastic_master
+  pre_tasks:
+    - name: Remove the folder
+      file:
+        path: "{{ data }}"
+        state: absent
+      become: true
   roles:
     - elasticsearch
+  tasks:
+    - name: Adding the firewall rule
+      firewalld:
+        port: "{{  item }}/tcp"
+        state: enabled
+        permanent: yes
+        immediate: yes
+      when: ansible_facts['os_family'] != "Debian"
+      become: true
+      loop:
+        - 9200
+        - 9300
+
+    - name: Firewall rule for Ubuntu System
+      ufw:
+        port: "{{ item }}"
+        proto: tcp
+        rule: allow
+      when: ansible_facts['os_family'] == "Debian"
+      become: true
+      loop:
+          - 9300
+          - 9200
 
 
     

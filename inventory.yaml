@@ -1,0 +1,20 @@
+all:
+  children:
+    elastic_nodes:
+      children:
+        elastic_data: {}
+        elastic_master:
+          hosts:
+            192.168.1.64:
+              data: /elkdata01
+              is_data: 'true'
+              is_master: 'true'
+              jvmsize: 128m
+              node_name: elk01
+            192.168.1.65:
+              data: /elkdata01
+              is_data: 'true'
+              is_master: 'true'
+              jvmsize: 128m
+              node_name: elk02
+    ungrouped: {}

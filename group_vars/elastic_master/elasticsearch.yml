@@ -1,18 +1,18 @@
 
 es_heap_size: "{{ jvmsize }}"
-es_log_dir: "/var/log/elasticsearch"
+es_log_dir: "/opt/elasticsearch/log/{{ node_name }}"
 es_version: 7.11.1
 es_data_dirs:
   - "{{ data }}"
 es_config:
-  cluster.name: "esprd"
-  network.host: 0.0.0.0
+  cluster.name: "Tap_ES"
+  network.host: 0
   cluster.initial_master_nodes: "{{ groups['elastic_master'] | join(',') }}"
-  discovery.seed_hosts: "{{ groups['elastic_master']:9300 | join(',') }}"
+  discovery.seed_hosts: "{{ groups['elastic_nodes'] | join(':9300,') }}:9300"
   http.port: 9200
-  node.data: "{{ is_master }}"
-  node.name: "{{ node_name }}"
-  node.master: "{{ is_data }}"
-  bootstrap.memory_lock: false
+  node.data: "{{ is_data }}"
+#  node.name: "{{ node_name }}"
+  node.master: "{{ is_master }}"
+  bootstrap.memory_lock: true
 
       

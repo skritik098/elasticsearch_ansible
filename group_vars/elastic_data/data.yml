@@ -1,11 +1,11 @@
 
 es_heap_size: "{{ jvmsize }}"
-es_log_dir: "/var/log/elasticsearch"
+es_log_dir: "/opt/elasticsearch/log/{{ node_name }}"
 es_data_dirs:
   - "{{ data }}"
 es_config:
   cluster.name: "esprd"
-  network.host: 0.0.0.0
+  network.host: "{{ ansible_facts['ansible_default_ipv4']['addresses'] }}"
   cluster.initial_master_nodes: "{{ groups['elastic_master'] | join(',') }}"
   discovery.seed_hosts: "{{ groups['elastic_master']:9300 | join(',') }}" # If it gives any error then we have to add the data node as well.
   http.port: 9200
